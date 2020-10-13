@@ -6,9 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  itemMenuSelected: string = 'recipes';
-
-  onMenuSelected(selected: string){
-    this.itemMenuSelected = selected;
-  }
+  itemMenuSelected = 'recipes';
 }
