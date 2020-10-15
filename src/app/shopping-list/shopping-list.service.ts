@@ -13,21 +13,36 @@ export class ShoppingListService {
     new Ingredient('Apples', 5),
     new Ingredient('Tommato', 10)
   ];
+  startEditing = new Subject<number>();
 
   constructor() { }
 
-  getIngredients()
+  getIngredients(): Ingredient[]
   {
     return this.ingredients.slice();
   }
 
-  addIngredient(ingredient: Ingredient){
+  addIngredient(ingredient: Ingredient): void {
     this.ingredients.push(ingredient);
     this.ingredientChange.next(this.ingredients.slice());
   }
 
-  addIngredients(ingredients: Ingredient[]){
+  addIngredients(ingredients: Ingredient[]): void {
     this.ingredients.push(...ingredients);
     this.ingredientChange.next(this.ingredients.slice());
+  }
+
+  updateIngredient(index: number, newIngredient: Ingredient): void{
+      this.ingredients[index] = newIngredient;
+      this.ingredientChange.next(this.ingredients.slice());
+  }
+
+  getIngredient(index: number): Ingredient {
+      return this.ingredients[index];
+  }
+
+  deleteIngredient(index: number): void{
+      this.ingredients.slice(index, 1);
+      this.ingredientChange.next(this.ingredients.slice());
   }
 }
