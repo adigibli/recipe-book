@@ -21,8 +21,8 @@ export class RecipeEditComponent implements OnInit {
       this.route.params
       .subscribe(
           (params: Params) => {
-              this.id = +params.id;
-              this.editMode = params.id != null;
+              this.id = +params['id'];
+              this.editMode = params['id'] != null;
               this.initForm();
           }
       );
@@ -61,8 +61,8 @@ export class RecipeEditComponent implements OnInit {
               for (const ingredient of recipe.ingredients){
                   recipeIngredients.push(
                       new FormGroup({
-                          name: new FormControl(ingredient.name, Validators.required),
-                          amount: new FormControl(ingredient.amount, [
+                          'name': new FormControl(ingredient.name, Validators.required),
+                          'amount': new FormControl(ingredient.amount, [
                             , Validators.required,
                             , Validators.pattern(/^[1-9]+[0-9]*$/)
                           ])
@@ -73,22 +73,26 @@ export class RecipeEditComponent implements OnInit {
       }
 
       this.recipeForm = new FormGroup({
-          name: new FormControl(recipeName, Validators.required),
-          imagePath: new FormControl(recipeImagePath, Validators.required),
-          description: new FormControl(recipeDescription, Validators.required),
-          ingredients: recipeIngredients
+          'name': new FormControl(recipeName, Validators.required),
+          'imagePath': new FormControl(recipeImagePath, Validators.required),
+          'description': new FormControl(recipeDescription, Validators.required),
+          'ingredients': recipeIngredients
       });
   }
 
   onAddIngredient(): void {
     (this.recipeForm.get('ingredients') as FormArray).controls.push(
         new FormGroup({
-            name: new FormControl(null, Validators.required),
-            amount: new FormControl(null, [
+            'name': new FormControl(null, Validators.required),
+            'amount': new FormControl(null, [
                     , Validators.required,
                     , Validators.pattern(/^[1-9]+[0-9]*$/)
             ])
         })
     );
+  }
+
+  onDeleteIngredient(index: number){
+      (<FormArray>this.recipeForm.get('ingredents')).removeAt(index);
   }
 }
