@@ -1,3 +1,4 @@
+import { RecipesResolverService } from './recipes/recipes-resolver.service';
 import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.component';
 import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 import { RecipesComponent } from './recipes/recipes.component';
@@ -14,7 +15,7 @@ const appRoutes: Routes = [
     {path: 'recipes', component: RecipesComponent, children: [
         {path: '', component: RecipeStartComponent},
         {path: 'new', component: RecipeEditComponent},
-        {path: ':id', component: RecipesDetailComponent},
+        {path: ':id', component: RecipesDetailComponent, resolve: [RecipesResolverService]},
         {path: ':id/edit', component: RecipeEditComponent},
     ]},
     {path: 'shopping-list', component: ShoppingListComponent}
